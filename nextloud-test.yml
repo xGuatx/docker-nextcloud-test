@@ -1,0 +1,15 @@
+services:
+  nextcloud:
+    container_name: nextcloud
+    image: nextcloud:latest
+    restart: unless-stopped
+    environment:
+      - PHP_UPLOAD_LIMIT=10G
+      - UPLOAD_MAX_FILESIZE=10G
+      - POST_MAX_SIZE=10G
+      - MEMORY_LIMIT=1G
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
